@@ -29,7 +29,7 @@ Unpkg Unbabel Version (8kb)
 # Usage
 
 ```javascript
-calerts('Error', 'Something error occured', 'error')
+calert('Error', 'Something error occured', 'error')
 ```
 
 ![sample](images/sample.png)
@@ -50,7 +50,7 @@ calert({
 ## sample 3
 
 ```javascript
-calerts({
+calert({
   icon: "warning",
   text: "You must login first",
   inputs: {
