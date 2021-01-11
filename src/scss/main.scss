@@ -1,0 +1,174 @@
+$backdropColor: rgba(black, 0.4);
+$boxColor: snow;
+$textColor: lighten(black, 25%);
+$primary: #3984ff;
+$danger: #ff4f4f;
+$bdrs: 5px;
+$padding: 1rem;
+$overlap-1: 100;
+$overlap-2: 200;
+$overlap-3: 300;
+$textSpacingY: 1rem;
+$buttonMargin: 0.35rem;
+
+@import './animation';
+@import './icons';
+
+@mixin xsmSize {
+  @media screen and (min-width: 320px) {
+    @content;
+  }
+}
+@mixin mediumSize {
+  @media screen and (min-width: 700px) {
+    @content;
+  }
+}
+
+@mixin defaultButton($background) {
+  --background: #{$background};
+  --focusColor: #{rgba($background, 0.6)};
+  --hoverColor: #{darken($background, 10%)};
+  background: var(--background);
+  cursor: pointer;
+  &:focus {
+    box-shadow: 0 0 0 3px var(--focusColor);
+  }
+  &:hover {
+    background-color: var(--hoverColor);
+  }
+}
+.ca-backdrop {
+  position: fixed;
+  height: calc(100% - 20px);
+  z-index: $overlap-1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  text-align: center;
+  background: $backdropColor;
+  display: flex;
+  padding: 10px;
+  align-items: center;
+  justify-content: center;
+}
+.ca-box {
+  background: white;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-text-size-adjust: 100%;
+  z-index: $overlap-2;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: $bdrs;
+  padding: $padding;
+  margin: auto;
+  box-sizing: border-box;
+  animation: ca-intro 0.1s ease;
+  @include mediumSize {
+    width: 450px;
+  }
+  img {
+    max-width: 100%;
+  }
+  .ca-button-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-top: $textSpacingY;
+    @include xsmSize {
+      flex-direction: row;
+    }
+  }
+
+  .ca-content-section {
+    text-align: center;
+    padding: 0 $buttonMargin;
+    h2.ca-title {
+      font-size: 1.9rem;
+      color: $textColor;
+      font-weight: 400;
+      margin: $textSpacingY 0;
+    }
+    .ca-text {
+      font-size: 1.2rem;
+      color: lighten($textColor, 5%);
+      word-wrap: no-wrap;
+      margin: 0;
+    }
+    .ca-inputs-form {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      margin-top: 1rem;
+    }
+  }
+  footer {
+    text-align: center;
+    margin-top: 1rem;
+    hr {
+      border-top: none;
+      border-width: 2px;
+      width: 100%;
+      margin-bottom: 1rem;
+      border-color: #adadad;
+    }
+    a {
+      color: #03a0ff;
+      text-decoration: none;
+      font-weight: 500;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.ca-btn {
+  font-size: 1rem;
+  padding: 0.5rem 0.5rem;
+  min-width: 70px;
+  border-radius: $bdrs;
+  border: none;
+  color: white;
+  margin: $buttonMargin;
+  user-select: none;
+  font-weight: 600;
+  &:focus {
+    outline: none;
+  }
+}
+.ca-btn-primary {
+  @include defaultButton($primary);
+}
+.ca-btn-danger {
+  @include defaultButton($danger);
+}
+
+/* Inputs */
+$inputPadding: 0.25rem;
+$inputMarginY: 0.5rem;
+.ca-input {
+  padding: $inputPadding;
+  border: none;
+  border-radius: 2.5px;
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  margin: $inputMarginY 0;
+  font-size: 1.2rem;
+  color: lighten($textColor, 5%);
+  min-width: calc(100% - #{$inputPadding * 2});
+  &:focus {
+    outline: none;
+    border: 1px solid rgba($primary, 0.8);
+    box-shadow: 0 0 1px 2px rgba($primary, 0.4);
+  }
+}

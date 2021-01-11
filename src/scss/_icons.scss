@@ -1,0 +1,56 @@
+$iconsColor: (
+  'error': #f80000,
+  'info': #0092d4,
+  'success': #26cf20,
+  'warning': #fcba00,
+  'question': #545454,
+);
+
+$iconsContent: (
+  'info': '0069',
+  'success': '2713',
+  'error': '00d7',
+  'warning': '0021',
+  'question': '003F',
+);
+
+.ca-icon-section {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  margin: 0 1rem;
+}
+div.ca-icons {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  transform: scale(1.5);
+  font-family: Helvetica, Arial, Sans-Serif;
+  margin: 2rem 0;
+}
+
+@each $name, $color in $iconsColor {
+  .ca-icons-#{$name} {
+    border: 2px solid lighten($color, 30%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-width: 0;
+    border-width: 2px;
+    &::before {
+      @if $name == success {
+        color: lighten($color, 20%);
+        transform: scale(2);
+      } @else {
+        color: $color;
+        transform: scale(2.5);
+      }
+    }
+  }
+}
+@each $name, $unicode in $iconsContent {
+  .ca-icons-#{$name}::before {
+    content: unquote('"\\#{$unicode}"');
+  }
+}

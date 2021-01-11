@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Custom Alert</title>
+    <style type="text/css" media="all">
+      body {
+        font-family: inherit;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="ca-icons ca-icons-info"></div>
+    <br />
+    <div class="ca-icons ca-icons-success"></div>
+    <br />
+    <div class="ca-icons ca-icons-warning"></div>
+    <br />
+    <div class="ca-icons ca-icons-question"></div>
+    <br />
+    <div class="ca-icons ca-icons-error"></div>
+    <script
+      src="../dist/calert.umd.js"
+      type="text/javascript"
+      charset="utf-8"
+    ></script>
+    <script type="text/javascript" charset="utf-8">
+      calert({
+        title: 'Hello world',
+      })
+        .then((value) => {
+          return calert({
+            icon: 'success',
+            title: 'Successfully Login',
+          })
+        })
+        .then((value) => {
+          return calert({
+            icon: 'question',
+            title: 'Do you have any questions ?',
+            confirmButton: 'Yes',
+            cancelButton: 'Nothing',
+          })
+        })
+        .then((value) => {
+          console.log(value)
+          return calert({
+            icon: 'error',
+            title: 'Something Error Occured',
+            confirmButton: false,
+            cancelButton: 'Go back to page',
+          })
+        })
+    </script>
+  </body>
+</html>
