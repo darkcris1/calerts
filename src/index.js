@@ -74,7 +74,7 @@ function parseArgument(args) {
   return initialConfig
 }
 
-function ca() {
+function calert() {
   cleanUp()
   const config = parseArgument(arguments)
   const { backdropClick = true } = config
@@ -210,5 +210,5 @@ function ca() {
   return caPromise.promise
 }
 
-ca.utils = es
-export default ca
+calert.utils = es
+export default calert
