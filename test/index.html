@@ -27,16 +27,28 @@
       charset="utf-8"
     ></script>
     <script type="text/javascript" charset="utf-8">
-      calert({
-        title: 'Hello world',
-      })
-        .then((value) => {
+      calert('hello world', 'asdasd', 'error')
+        .then(() => {
           return calert({
-            icon: 'success',
-            title: 'Successfully Login',
+            text: 'Please Enter a text',
+            inputs: {
+              text: {
+                type: 'text',
+                value: 'Random texts',
+              },
+            },
+            contentPosition: 'left',
+            buttonsPosition: 'right',
           })
         })
         .then((value) => {
+          return calert({
+            title: `You type ${value.inputs.text} `,
+            confirmButton: false,
+          })
+        })
+        .then((value) => {
+          console.log(value)
           return calert({
             icon: 'question',
             title: 'Do you have any questions ?',
