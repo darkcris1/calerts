@@ -1,12 +1,12 @@
 type POSITIONS = 'left' | 'center' | 'right'
 type BUTTON = boolean | string | object
-
 interface caConfig {
   text?: string | object
   html?: string | object
   title?: string | object
   footer?: string | object
   form?: object
+  timer?: number
   confirmButton?: BUTTON
   cancelButton?: BUTTON
   backdropPostion?: POSITIONS
@@ -21,16 +21,24 @@ interface caConfig {
   icon?: 'success' | 'error' | 'info' | 'warning' | 'question'
 }
 
-type tag = string | HTMLElement
-interface caFunction {
-  (...params: caConfig | string): Promise<any>
+interface result {
+  inputs?: object
+  buttons?: object
+  isCanceled?: boolean
+  isConfirmed?: boolean
+}
+
+type config = string | caConfig
+interface calert {
+  (...params: config[]): Promise<result>
   utils: {
-    tag: (tag: tag, options?: object) => Node
+    tag: (tag: string | HTMLElement, options?: object) => Node
     styles: (element: HTMLElement, options?: object) => Node
     edit: (element: HTMLElement, options?: object) => any
     queryAll: (selector: string) => NodeList
     createPromise: () => object
   }
 }
-declare const ca: caFunction
-export default ca
+
+declare const calert: calert
+export default calert
