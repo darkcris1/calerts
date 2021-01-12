@@ -185,10 +185,6 @@ function ca() {
         break
       case 'preConfirm':
         if (value instanceof Function) value()
-        break
-      default:
-        if (/image|backdropClick/.test(key)) break
-        console.error(key + ' is invalid option')
     }
   }
 
