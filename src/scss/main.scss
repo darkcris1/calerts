@@ -8,7 +8,7 @@ $padding: 1rem;
 $overlap-1: 100;
 $overlap-2: 200;
 $overlap-3: 300;
-$textSpacingY: 1rem;
+$textSpacingY: 0.5rem;
 $buttonMargin: 0.35rem;
 
 @import './animation';
@@ -161,7 +161,7 @@ $inputMarginY: 0.5rem;
   padding: $inputPadding;
   border: none;
   border-radius: 2.5px;
-  border: 1px solid rgba(0, 0, 0, 0.8);
+  border: 1px solid rgb(116, 116, 116);
   margin: $inputMarginY 0;
   font-size: 1.2rem;
   color: lighten($textColor, 5%);

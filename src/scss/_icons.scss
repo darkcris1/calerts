@@ -39,13 +39,8 @@ div.ca-icons {
     border-width: 0;
     border-width: 2px;
     &::before {
-      @if $name == success {
-        color: lighten($color, 20%);
-        transform: scale(2);
-      } @else {
-        color: $color;
-        transform: scale(2.5);
-      }
+      color: $color;
+      transform: scale(2.5);
     }
   }
 }
