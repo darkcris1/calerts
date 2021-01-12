@@ -21,11 +21,8 @@
     "custom-alert",
     "swal"
   ],
-  "bugs": {
-    "url": "https://github.com/darkcris1/json-msg/issues"
-  },
   "repository": {
-    "url": "https://github.com/darkcris1/json-msg.git",
+    "url": "https://github.com/darkcris1/calerts",
     "type": "git"
   },
   "author": "Cris Fandiño <sircnujnuj@gmail.com>",
