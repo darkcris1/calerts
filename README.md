@@ -32,7 +32,7 @@ Unpkg Unbabel Version (8kb)
 calert('Error', 'Something error occured', 'error')
 ```
 
-![sample](images/sample.png)
+![sample](https://github.com/darkcris1/calerts/blob/master/images/sample.png?raw=true)
 
 ## sample 2
 
@@ -45,7 +45,7 @@ calert({
 }))
 ```
 
-![sample](images/sample3.png)
+![sample](https://github.com/darkcris1/calerts/blob/master/images/sample3.png?raw=true)
 
 ## sample 3
 
@@ -67,4 +67,4 @@ calert({
 })
 ```
 
-![sample](images/sample2.png)
+![sample](https://github.com/darkcris1/calerts/blob/master/images/sample2.png?raw=true)

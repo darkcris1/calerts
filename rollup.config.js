@@ -7,6 +7,12 @@ import postcss from 'rollup-plugin-postcss'
 
 const libraryName = 'calert' // Change with your library's name
 
+function sass() {
+  return postcss({
+    minimize: true,
+    autoModules: true,
+  })
+}
 const banner = `/*!
  * ${pkg.name}
  * ${pkg.description}
@@ -27,25 +33,10 @@ export default (commandLineArgs) => {
         file: `dist/${libraryName}.umd.js`,
         format: 'umd',
       },
-      plugins: [postcss()],
+      plugins: [sass()],
     },
 
     // CommonJS (for Node) build
-    {
-      input: 'src/index.js',
-      output: {
-        banner,
-        file: pkg.main,
-        format: 'cjs',
-        exports: 'auto',
-      },
-      plugins: [
-        postcss(),
-        babel({
-          exclude: ['node_modules/**'],
-        }),
-      ],
-    },
   ]
 
   if (commandLineArgs.environment === 'BUILD:production') {
@@ -62,7 +53,7 @@ export default (commandLineArgs) => {
         // Uncomment the following 2 lines if your library has external dependencies
         // resolve(), // teach Rollup how to find external modules
         // commonjs(), // so Rollup can convert external modules to an ES module
-        postcss(),
+        sass(),
 
         babel({
           exclude: ['node_modules/**'],
@@ -83,11 +74,28 @@ export default (commandLineArgs) => {
         format: 'umd',
       },
       plugins: [
-        postcss(),
+        sass(),
         terser({
           output: {
             comments: /^!/,
           },
+        }),
+      ],
+    })
+
+    // Common JS
+    configs.push({
+      input: 'src/index.js',
+      output: {
+        banner,
+        file: pkg.main,
+        format: 'cjs',
+        exports: 'auto',
+      },
+      plugins: [
+        sass(),
+        babel({
+          exclude: ['node_modules/**'],
         }),
       ],
     })
