@@ -1,6 +1,6 @@
 import * as es from './essential'
-import './css/main.css'
-const { tag, styles, edit, queryAll, createPromise } = es
+import './scss/main.scss'
+const { tag, styles, edit, queryAll, createPromise, parseArgument } = es
 
 let caPromise,
   caResolve,
@@ -30,21 +30,19 @@ function defaultButton(type, options) {
   })
 }
 function defaultInput(key, options) {
+  const isInput = /text|password|tel|email/.test(options.type)
   return tag('input', {
     ...options,
-    className:
-      /text|password|tel|email/.test(options.type) && !options.class
-        ? 'ca-input'
-        : options.class,
+    className: isInput && !options.className ? 'ca-input' : options.className,
     dataset: ['caxyz', key],
   })
 }
 function cleanUp() {
   const shallowBackdrop = backDrop
   const shallowBoxModal = boxModal
-  const transitionSpeed = 100
-  shallowBoxModal.style.animation = `ca-out ${transitionSpeed}ms ease-in-out forwards`
-  shallowBackdrop.style.animation = `ca-fade ${transitionSpeed}ms ease-in-out forwards`
+  const transitionSpeed = 150
+  shallowBoxModal.style.animation = `ca-out ${transitionSpeed}ms linear forwards`
+  shallowBackdrop.style.animation = `ca-fade ${transitionSpeed}ms linear forwards`
   setTimeout(function () {
     shallowBackdrop.remove()
   }, transitionSpeed)
@@ -59,21 +57,6 @@ function cleanAndResolve() {
   result = {}
   caPromise = caResolve = undefined
 }
-function parseArgument(args) {
-  const strParameters = ['title', 'text', 'icon']
-  let initialConfig = { confirmButton: true }
-  for (let i = 0; i < args.length; i++) {
-    const val = args[i]
-    if (!(typeof val === 'string')) {
-      initialConfig = { ...initialConfig, ...val }
-      continue
-    }
-    initialConfig[strParameters[i]] = args[i]
-  }
-
-  return initialConfig
-}
-
 function calert() {
   cleanUp()
   const config = parseArgument(arguments)
@@ -96,90 +79,88 @@ function calert() {
   if (config.inputs) result.inputs = {}
   if (config.buttons) result.buttons = {}
 
-  const iconSection = tag('div', {
-    className: 'ca-icon-section',
-    appendTo: config.icon ? boxModal : null,
-  })
-
   tag('img', {
     appendTo: config.image ? boxModal : null,
     ...config.image,
   })
-  const contentSection = tag('div', {
-    className: 'ca-content-section',
-    appendTo: boxModal,
-  })
-  const titleTag = tag('h2', {
-    className: 'ca-title',
-    appendTo: config.title ? contentSection : null,
-  })
-  const textTag = tag('p', {
-    className: 'ca-text',
-    appendTo: config.text ? contentSection : null,
-  })
-  const formInputs = tag('form', {
-    className: 'ca-inputs-form',
-    appendTo: config.inputs ? contentSection : null,
-  })
-  const buttonSection = tag('div', {
-    className: 'ca-button-section',
-    appendTo: boxModal,
-  })
-  const footerSection = tag('footer', {
-    appendChild: tag('hr'),
-    appendTo: config.footer ? boxModal : null,
-  })
+  const sections = {
+    icon: tag('div', {
+      className: 'ca-icon-section',
+      appendTo: config.icon ? boxModal : null,
+    }),
+    content: tag('div', {
+      className: 'ca-content-section',
+      appendTo: boxModal,
+    }),
+    buttons: tag('div', {
+      className: 'ca-button-section',
+      appendTo: boxModal,
+    }),
+    footer: tag('footer', {
+      appendTo: config.footer ? boxModal : null,
+    }),
+  }
 
+  const content = {
+    title: tag('h2', {
+      className: 'ca-title',
+      appendTo: config.title ? sections.content : null,
+    }),
+    text: tag('p', {
+      className: 'ca-text',
+      appendTo: config.text ? sections.content : null,
+    }),
+    form: tag('form', {
+      className: 'ca-inputs-form',
+      appendTo: config.inputs ? sections.content : null,
+    }),
+  }
+
+  // Initialze all the options
   for (let key in config) {
     const value = config[key]
     switch (key) {
       case 'icon':
         tag('div', {
           className: 'ca-icons ca-icons-' + value,
-          appendTo: iconSection,
+          appendTo: sections[key],
         })
+        break
+      case 'footer':
+        edit(sections[key], { innerHTML: value, ...value })
         break
       case 'title':
       case 'text':
-        const el = key === 'title' ? titleTag : textTag
-        edit(el, { innerText: value, ...value })
+        edit(content[key], { innerText: value, ...value })
         break
       case 'form':
-        edit(formInputs, value)
+        edit(content[key], value)
         break
       case 'inputs':
         for (let input in value) {
-          formInputs.appendChild(defaultInput(input, value[input]))
+          content.form.appendChild(defaultInput(input, value[input]))
         }
         break
       case 'cancelButton':
       case 'confirmButton':
         if (!value) break
-        buttonSection.appendChild(defaultButton(key, value))
+        sections.buttons.appendChild(defaultButton(key, value))
         break
-      case 'footer':
-        footerSection.innerHTML += value
-        break
-      case 'modalBox':
+      case 'modal':
       case 'backdrop':
-        const container = key === 'modalBox' ? boxModal : backDrop
+        const container = key === 'modal' ? boxModal : backDrop
         styles(container, value)
         break
       case 'buttons':
         for (let button in value) {
-          buttonSection.appendChild(defaultButton(button, value[button]))
+          sections.buttons.appendChild(defaultButton(button, value[button]))
         }
         break
       case 'iconPosition':
       case 'contentPosition':
       case 'buttonsPosition':
         const position = value.trim()
-        const element =
-          key === 'contentPosition'
-            ? contentSection
-            : key === 'iconPosition'
-            ? iconSection
-            : buttonSection
+        const element = sections[key.replace('Position', '')]
         if (position === 'center' || !/right|left/.test(position)) break
         changePosition(element, position)
         break
@@ -207,6 +188,7 @@ function calert() {
   })
   if (typeof config.timer === 'number')
     timer = setTimeout(cleanAndResolve, config.timer)
+
   return caPromise.promise
 }
 
