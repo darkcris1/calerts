@@ -41,6 +41,9 @@ div.ca-icons {
     &::before {
       color: $color;
       transform: scale(2.5);
+      @if ($name == success) {
+        transform: scale(2);
+      }
     }
   }
 }

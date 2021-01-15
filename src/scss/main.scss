@@ -10,7 +10,7 @@ $overlap-2: 200;
 $overlap-3: 300;
 $textSpacingY: 0.5rem;
 $buttonMargin: 0.35rem;
-
+$link-color: #03a0ff;
 @import './animation';
 @import './icons';
 
@@ -56,9 +56,7 @@ $buttonMargin: 0.35rem;
 }
 .ca-box {
   background: white;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji',
-    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  font-family: 'Lato', 'Helvetica Neue', Helvetica, sans-serif;
   -webkit-text-size-adjust: 100%;
   z-index: $overlap-2;
   width: 100%;
@@ -68,7 +66,9 @@ $buttonMargin: 0.35rem;
   padding: $padding;
   margin: auto;
   box-sizing: border-box;
-  animation: ca-intro 0.1s ease;
+  animation: ca-intro 0.3s;
+  word-break: break-all;
+  will-change: transform;
   @include mediumSize {
     width: 450px;
   }
@@ -123,9 +123,11 @@ $buttonMargin: 0.35rem;
       border-color: #adadad;
     }
     a {
-      color: #03a0ff;
+      color: $link-color;
       text-decoration: none;
       font-weight: 500;
+      cursor: pointer;
+      letter-spacing: 1px;
       &:hover {
         text-decoration: underline;
       }

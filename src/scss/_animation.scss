@@ -1,43 +1,63 @@
 @keyframes ca-intro {
-	0% {
-		transform: scaleY(0.96);
-	}50%{
-		transform:  scale(1.05);
-	}100% {
-		transform: scale(1);
-	}
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  1% {
+    transform: scale(0.5);
+  }
+
+  45% {
+    transform: scale(1.05);
+  }
+
+  80% {
+    transform: scale(0.95);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 @keyframes ca-out {
-	from {
-		transform:  scale(1);
-		opacity: 1;
-	}to {
-		transform: scale(0.7);
-		opacity: 0;
-	}
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.7);
+    opacity: 0;
+  }
 }
-@keyframes ca-fade{
-	from {opacity: 1;}
-	to {opacity: 0;}
+@keyframes ca-fade {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 @keyframes ca-intro-icon {
-	0%{
-		opacity: 0.7;
-		transform:  scale(2);
-	}50%{
-		transform:  scale(3);
-	}
-	100%{
-		transform:  scale(2.5);
-		opacity: 1;
-	}
+  0% {
+    opacity: 0.7;
+    transform: scale(2);
+  }
+  50% {
+    transform: scale(3);
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 1;
+  }
 }
 
 @keyframes ca-spin {
-	from {
-		transform: rotate(0);
-	}to{
-		transform: rotate(360deg);
-	}
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
