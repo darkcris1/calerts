@@ -27,44 +27,43 @@
       charset="utf-8"
     ></script>
     <script type="text/javascript" charset="utf-8">
-      calert('hello world', 'asdasd', 'error')
-        .then(() => {
-          return calert({
-            text: 'Please Enter a text',
-            inputs: {
-              text: {
-                type: 'text',
-                value: 'Random texts',
-              },
+      ;(async () => {
+        await calert('hello world', 'asdasd', 'error', {
+          confirmButton: false,
+        })
+        const result = await calert({
+          text: 'Please Enter a text',
+          inputs: {
+            text: {
+              type: 'text',
+              value: 'Random texts',
             },
-            contentPosition: 'left',
-            buttonsPosition: 'right',
-          })
+          },
+          contentPosition: 'left',
+          buttonsPosition: 'right',
         })
-        .then((value) => {
-          return calert({
-            title: `You type ${value.inputs.text} `,
-            confirmButton: false,
-          })
+        await calert({
+          title: `You type ${result.inputs.text} `,
+          confirmButton: false,
         })
-        .then((value) => {
-          console.log(value)
-          return calert({
-            icon: 'question',
-            title: 'Do you have any questions ?',
-            confirmButton: 'Yes',
-            cancelButton: 'Nothing',
-          })
+        await calert({
+          icon: 'question',
+          title: 'Do you have any questions ?',
+          confirmButton: 'Yes',
+          cancelButton: 'Nothing',
         })
-        .then((value) => {
-          console.log(value)
-          return calert({
-            icon: 'error',
-            title: 'Something Error Occured',
-            confirmButton: false,
-            cancelButton: 'Go back to page',
-          })
+        await calert({
+          icon: 'error',
+          title: 'Something Error Occured',
+          confirmButton: false,
+          cancelButton: 'Go back to page',
         })
+        await calert({
+          icon: 'warning',
+          title: 'Maintenance',
+          confirmButton: false,
+        })
+      })()
     </script>
   </body>
 </html>
