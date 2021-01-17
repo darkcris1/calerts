@@ -99,6 +99,21 @@ export default (commandLineArgs) => {
         }),
       ],
     })
+    configs.push({
+      input: 'src/index.js',
+      output: {
+        banner,
+        file: pkg.module,
+        format: 'esm',
+        exports: 'auto',
+      },
+      plugins: [
+        sass(),
+        babel({
+          exclude: ['node_modules/**'],
+        }),
+      ],
+    })
   }
 
   return configs
