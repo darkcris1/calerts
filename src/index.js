@@ -2,6 +2,7 @@ import * as es from './essential'
 import './scss/main.scss'
 const { tag, styles, edit, queryAll, createPromise, parseArgument } = es
 
+// Global variables and initial values
 let caPromise,
   caResolve,
   timer,
@@ -30,7 +31,7 @@ function defaultButton(type, options) {
   })
 }
 function defaultInput(key, options) {
-  const isInput = /text|password|tel|email/.test(options.type)
+  const isInput = /text|password|tel|email|number/.test(options.type)
   return tag('input', {
     ...options,
     className: isInput && !options.className ? 'ca-input' : options.className,
@@ -65,7 +66,7 @@ function calert() {
   caResolve = caPromise.resolve
 
   backDrop = tag('div', {
-    className: 'ca-backdrop',
+    className: `ca-backdrop`,
     onClick: function (e) {
       if (e.target !== this || !backdropClick) return
       result.isCanceled = true
@@ -122,7 +123,7 @@ function calert() {
     switch (key) {
       case 'icon':
         tag('div', {
-          className: 'ca-icons ca-icons-' + value,
+          className: `ca-icons ca-icons-${value}`,
           appendTo: sections[key],
         })
         break
@@ -166,6 +167,8 @@ function calert() {
         break
       case 'preConfirm':
         if (value instanceof Function) value()
+      case 'animation':
+        edit(boxModal, { style: { animation: value } })
     }
   }
 
