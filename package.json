@@ -1,13 +1,14 @@
 {
   "name": "calerts",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Lightweight and customizable dialogs inspired by sweetalert",
   "main": "dist/calert.cjs.js",
   "browser": "dist/calert.umd.min.js",
-  "module": "src/index.js",
-  "types": "src/index.d.ts",
+  "module": "dist/calert.esm.js",
+  "types": "index.d.ts",
   "files": [
-    "dist/"
+    "dist/",
+    "index.d.ts"
   ],
   "scripts": {
     "build": "rollup -c --environment BUILD:production",

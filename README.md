@@ -6,6 +6,8 @@ Custom-alert is a lightweight alternative for sweetalert.
 
 This library inspire by [sweetalert](https://sweetalert.js.org/)
 
+Checkout the [Documentation](https://calert.vercel.app)
+
 # Installation
 
 NPM
