@@ -5,9 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Custom Alert</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
     <style type="text/css" media="all">
       body {
         font-family: inherit;
+      }
+      @keyframes flip-scale-2-hor-top {
+        0% {
+          -webkit-transform: translateY(0) rotateX(0) scale(1);
+          transform: translateY(0) rotateX(0) scale(1);
+          -webkit-transform-origin: 50% 0%;
+          transform-origin: 50% 0%;
+        }
+        50% {
+          -webkit-transform: translateY(-50%) rotateX(-90deg) scale(2);
+          transform: translateY(-50%) rotateX(-90deg) scale(2);
+          -webkit-transform-origin: 50% 50%;
+          transform-origin: 50% 50%;
+        }
+        100% {
+          -webkit-transform: translateY(-100%) rotateX(-180deg) scale(1);
+          transform: translateY(-100%) rotateX(-180deg) scale(1);
+          -webkit-transform-origin: 50% 100%;
+          transform-origin: 50% 100%;
+        }
       }
     </style>
   </head>
