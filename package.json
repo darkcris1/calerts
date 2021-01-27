@@ -1,10 +1,9 @@
 {
   "name": "calerts",
-  "version": "1.1.0",
+  "version": "1.1.8",
   "description": "Lightweight and customizable dialogs inspired by sweetalert",
-  "main": "dist/calert.cjs.js",
   "browser": "dist/calert.umd.min.js",
-  "module": "dist/calert.esm.js",
+  "main": "dist/calert.esm.js",
   "types": "index.d.ts",
   "files": [
     "dist/",
@@ -13,8 +12,7 @@
   "scripts": {
     "build": "rollup -c --environment BUILD:production",
     "dev": "rollup -c -w",
-    "clean": "rimraf dist coverage",
-    "publish": "npm publish"
+    "clean": "rimraf dist coverage"
   },
   "keywords": [
     "alerts",
