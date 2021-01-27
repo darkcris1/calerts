@@ -1,6 +1,6 @@
 {
   "name": "calerts",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "description": "Lightweight and customizable dialogs inspired by sweetalert",
   "browser": "dist/calert.umd.min.js",
   "main": "dist/calert.esm.js",
