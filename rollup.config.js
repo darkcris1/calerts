@@ -83,27 +83,11 @@ export default (commandLineArgs) => {
       ],
     })
 
-    // Common JS
     configs.push({
       input: 'src/index.js',
       output: {
         banner,
         file: pkg.main,
-        format: 'cjs',
-        exports: 'auto',
-      },
-      plugins: [
-        sass(),
-        babel({
-          exclude: ['node_modules/**'],
-        }),
-      ],
-    })
-    configs.push({
-      input: 'src/index.js',
-      output: {
-        banner,
-        file: pkg.module,
         format: 'esm',
         exports: 'auto',
       },
