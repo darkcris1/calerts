@@ -66,7 +66,7 @@ export function edit(el, option) {
 
 export function parseArgument(args) {
   const strParameters = ['title', 'text', 'icon']
-  let initialConfig = { confirmButton: true }
+  let initialConfig = { confirmButton: true, backdropClick: true }
   for (let i = 0; i < args.length; i++) {
     const val = args[i]
     if (!(typeof val === 'string')) {

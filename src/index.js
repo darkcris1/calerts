@@ -1,16 +1,15 @@
 import * as es from './essential'
 import './scss/main.scss'
-const { tag, styles, edit, queryAll, createPromise, parseArgument } = es
+
+const { tag, styles, edit, createPromise, parseArgument } = es
 
 // Global variables and initial values
 let caPromise,
   caResolve,
   timer,
-  result = {}
-
-let boxModal = tag('_'),
-  backDrop = tag('_')
-
+  result = {},
+  boxModal,
+  backDrop
 function changePosition(el, position) {
   const isRight = position === 'right'
   styles(el, {
@@ -28,30 +27,41 @@ function defaultButton(type, options) {
     innerText,
     dataset: ['caxyz', type],
     ...options,
+    onClick: function () {
+      switch (type) {
+        case 'cancelButton':
+        case 'confirmButton':
+          const data = type === 'cancelButton' ? 'isCanceled' : 'isConfirmed'
+          result[data] = true
+          break
+        default:
+          result.buttons[type] = true
+      }
+      cleanAndResolve()
+    },
   })
 }
-function defaultInput(key, options) {
-  const isInput = /text|password|tel|email|number/.test(options.type)
-  return tag('input', {
-    ...options,
-    className: isInput && !options.className ? 'ca-input' : options.className,
-    dataset: ['caxyz', key],
+function defaultInput(key, { value = '', type, className = '', ...props }) {
+  const tagName = type === 'textarea' ? type : 'input'
+  result.inputs[key] = value
+  return tag(tagName, {
+    ...props,
+    ...(!(type === 'textarea') && { type }),
+    value,
+    onChange: function () {
+      result.inputs[key] = this.value
+    },
+    className: type === 'range' ? className : `ca-input ${className}`,
   })
 }
 function cleanUp() {
-  const shallowBackdrop = backDrop
-  const shallowBoxModal = boxModal
+  // copy the elements so we can access the previous elements
+  const shallowBackdrop = backDrop || tag('_')
   const transitionSpeed = 150
-  shallowBoxModal.style.animation = `ca-out ${transitionSpeed}ms linear forwards`
-  shallowBackdrop.style.animation = `ca-fade ${transitionSpeed}ms linear forwards`
-  setTimeout(function () {
-    shallowBackdrop.remove()
-  }, transitionSpeed)
+  shallowBackdrop.style.animation = `ca-fade ${transitionSpeed}ms ease forwards`
+  setTimeout(() => shallowBackdrop.remove(), transitionSpeed)
 }
 function cleanAndResolve() {
-  queryAll('input[data-caxyz]').forEach((inp) => {
-    result.inputs[inp.dataset.caxyz] = inp.value
-  })
   clearTimeout(timer)
   caResolve(result)
   cleanUp()
@@ -61,7 +71,17 @@ function cleanAndResolve() {
 function calert() {
   cleanUp()
   const config = parseArgument(arguments)
-  const { backdropClick = true } = config
+  const {
+    backdropClick,
+    title,
+    text,
+    image,
+    icon,
+    inputs,
+    buttons,
+    footer,
+  } = config
+
   caPromise = createPromise()
   caResolve = caPromise.resolve
 
@@ -77,17 +97,17 @@ function calert() {
     className: 'ca-box',
     appendTo: backDrop,
   })
-  if (config.inputs) result.inputs = {}
-  if (config.buttons) result.buttons = {}
+  if (inputs) result.inputs = {}
+  if (buttons) result.buttons = {}
 
   tag('img', {
-    appendTo: config.image ? boxModal : null,
-    ...config.image,
+    appendTo: image ? boxModal : null,
+    ...image,
   })
   const sections = {
     icon: tag('div', {
       className: 'ca-icon-section',
-      appendTo: config.icon ? boxModal : null,
+      appendTo: icon ? boxModal : null,
     }),
     content: tag('div', {
       className: 'ca-content-section',
@@ -98,22 +118,22 @@ function calert() {
       appendTo: boxModal,
     }),
     footer: tag('footer', {
-      appendTo: config.footer ? boxModal : null,
+      appendTo: footer ? boxModal : null,
     }),
   }
 
   const content = {
     title: tag('h2', {
       className: 'ca-title',
-      appendTo: config.title ? sections.content : null,
+      appendTo: title ? sections.content : null,
     }),
     text: tag('p', {
       className: 'ca-text',
-      appendTo: config.text ? sections.content : null,
+      appendTo: text ? sections.content : null,
     }),
     form: tag('form', {
       className: 'ca-inputs-form',
-      appendTo: config.inputs ? sections.content : null,
+      appendTo: inputs ? sections.content : null,
     }),
   }
 
@@ -124,7 +144,7 @@ function calert() {
       case 'icon':
         tag('div', {
           className: `ca-icons ca-icons-${value}`,
-          appendTo: sections[key],
+          appendTo: sections.icon,
         })
         break
       case 'footer':
@@ -154,41 +174,26 @@ function calert() {
         break
       case 'buttons':
         for (let button in value) {
+          if (!value[button]) continue
           sections.buttons.appendChild(defaultButton(button, value[button]))
         }
         break
       case 'iconPosition':
       case 'contentPosition':
       case 'buttonsPosition':
-        const position = value.trim()
         const element = sections[key.replace('Position', '')]
-        if (position === 'center' || !/right|left/.test(position)) break
-        changePosition(element, position)
+        if (value === 'center') break
+        changePosition(element, value)
         break
       case 'preConfirm':
-        if (value instanceof Function) value()
+        if (value instanceof Function) value(boxModal)
       case 'animation':
-        edit(boxModal, { style: { animation: value } })
+        boxModal.style.animation = value
     }
   }
 
   document.body.appendChild(backDrop)
 
-  queryAll('button[data-caxyz]').forEach((btn) => {
-    edit(btn).on('click', function () {
-      const { caxyz } = this.dataset
-      switch (caxyz) {
-        case 'cancelButton':
-        case 'confirmButton':
-          const data = caxyz === 'cancelButton' ? 'isCanceled' : 'isConfirmed'
-          result[data] = true
-          break
-        default:
-          result.buttons[caxyz] = true
-      }
-      cleanAndResolve()
-    })
-  })
   if (typeof config.timer === 'number')
     timer = setTimeout(cleanAndResolve, config.timer)
 
