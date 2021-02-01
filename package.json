@@ -2,7 +2,7 @@
   "name": "calerts",
   "version": "1.1.9",
   "description": "Lightweight and customizable dialogs inspired by sweetalert",
-  "browser": "dist/calert.min.js",
+  "main": "dist/calert.min.js",
   "types": "index.d.ts",
   "files": [
     "dist/",
