@@ -40,7 +40,7 @@ $link-color: #03a0ff;
 }
 .ca-backdrop {
   position: fixed;
-  height: calc(100% - 20px);
+  height: 100%;
   z-index: $overlap-1;
   top: 0;
   left: 0;
@@ -53,6 +53,11 @@ $link-color: #03a0ff;
   padding: 10px;
   align-items: center;
   justify-content: center;
+  *,
+  *::after,
+  *::before {
+    box-sizing: border-box;
+  }
 }
 .ca-box {
   background: white;
@@ -67,10 +72,12 @@ $link-color: #03a0ff;
   margin: auto;
   box-sizing: border-box;
   animation: ca-intro 0.3s;
-  word-break: break-all;
   will-change: transform;
   @include mediumSize {
     width: 450px;
+  }
+  button {
+    -webkit-tap-highlight-color: transparent;
   }
   img {
     max-width: 100%;
@@ -91,6 +98,9 @@ $link-color: #03a0ff;
   .ca-content-section {
     text-align: center;
     padding: 0 $buttonMargin;
+    * {
+      overflow-wrap: break-word;
+    }
     h2.ca-title {
       font-size: 1.9rem;
       color: $textColor;
@@ -100,7 +110,6 @@ $link-color: #03a0ff;
     .ca-text {
       font-size: 1.2rem;
       color: lighten($textColor, 5%);
-      word-wrap: no-wrap;
       margin: 0;
     }
     .ca-inputs-form {
@@ -110,6 +119,9 @@ $link-color: #03a0ff;
       justify-content: center;
       flex-direction: column;
       margin-top: 1rem;
+      input[type='range'] {
+        width: 100%;
+      }
     }
   }
   footer {
@@ -157,17 +169,18 @@ $link-color: #03a0ff;
 }
 
 /* Inputs */
-$inputPadding: 0.25rem;
+$inputPadding: 0.5rem;
 $inputMarginY: 0.5rem;
 .ca-input {
   padding: $inputPadding;
   border: none;
   border-radius: 2.5px;
-  border: 1px solid rgb(116, 116, 116);
+  border: 1px solid $primary;
   margin: $inputMarginY 0;
   font-size: 1.2rem;
   color: lighten($textColor, 5%);
   min-width: calc(100% - #{$inputPadding * 2});
+  max-width: 100%;
   &:focus {
     outline: none;
     border: 1px solid rgba($primary, 0.8);
