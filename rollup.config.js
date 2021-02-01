@@ -30,7 +30,7 @@ export default (commandLineArgs) => {
       output: {
         banner,
         name: libraryName,
-        file: `dist/${libraryName}.umd.js`,
+        file: `dist/${libraryName}.js`,
         format: 'umd',
       },
       plugins: [sass()],
@@ -46,7 +46,7 @@ export default (commandLineArgs) => {
       output: {
         banner,
         name: libraryName,
-        file: `dist/${libraryName}.umd.min.js`,
+        file: `dist/${libraryName}.min.js`,
         format: 'umd',
       },
       plugins: [
@@ -79,22 +79,6 @@ export default (commandLineArgs) => {
           output: {
             comments: /^!/,
           },
-        }),
-      ],
-    })
-
-    configs.push({
-      input: 'src/index.js',
-      output: {
-        banner,
-        file: pkg.main,
-        format: 'esm',
-        exports: 'auto',
-      },
-      plugins: [
-        sass(),
-        babel({
-          exclude: ['node_modules/**'],
         }),
       ],
     })
