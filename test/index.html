@@ -46,20 +46,48 @@
     <br />
     <div class="ca-icons ca-icons-error"></div>
     <script
-      src="../dist/calert.umd.js"
+      src="../dist/calert.js"
       type="text/javascript"
       charset="utf-8"
     ></script>
     <script type="text/javascript" charset="utf-8">
       ;(async () => {
-        await calert('hello world', 'asdasd', 'error', {
-          confirmButton: false,
+        const a = await calert('hello world', 'asdasd', 'error', {
+          confirmButton: true,
+          buttons: {
+            hello: 'Hello',
+            asd: false,
+          },
+        })
+        await calert({
+          title: 'Successfully Registered asdasdasdsadasdasdasdasdasdsadsad',
         })
         const result = await calert({
           text: 'Please Enter a text',
+          backdropClick: false,
           inputs: {
             text: {
               type: 'text',
+              value: 'Random texts',
+            },
+            text1: {
+              type: 'number',
+              value: 'Random texts',
+            },
+            text2: {
+              type: 'range',
+              value: 'Random texts',
+            },
+            text3: {
+              type: 'date',
+              value: 'Random texts',
+            },
+            text4: {
+              type: 'textarea',
+              value: 'Random texts',
+            },
+            text5: {
+              type: 'textarea',
               value: 'Random texts',
             },
           },
@@ -67,7 +95,8 @@
           buttonsPosition: 'right',
         })
         await calert({
-          title: `You type ${result.inputs.text} `,
+          text: `<pre>${JSON.stringify(result, null, 2)}</pre>`,
+          title: `You type ${result.inputs} `,
           confirmButton: false,
         })
         await calert({
